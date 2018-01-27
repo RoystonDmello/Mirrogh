@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Mirrogh</string>
+    <string name="pick_picture">Pick</string>
+    <string name="transform_image">Transform</string>
 </resources>
