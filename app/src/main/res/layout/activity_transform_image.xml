@@ -30,6 +30,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="17dp"
             android:elevation="5dp"
+            android:onClick="uploadImage"
             android:text="@string/transform_image"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
