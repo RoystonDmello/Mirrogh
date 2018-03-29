@@ -7,7 +7,8 @@ public class StyleModel {
     private File file;
     private String id;
 
-    public StyleModel(){}
+    public StyleModel() {
+    }
 
     public StyleModel(File file, String id) {
         this.file = file;

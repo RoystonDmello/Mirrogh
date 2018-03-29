@@ -13,7 +13,7 @@ import java.io.File;
 
 import royston_dmello.mirrogh.R;
 
-public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder>{
+public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
 
     private Context context;
     private File[] files;
@@ -25,13 +25,17 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_image,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_image,
+                parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         File file = files[position];
-        Picasso.get().load(file).into(holder.image);
+        Picasso.get()
+                .load(file)
+                .error(R.drawable.ic_image)
+                .into(holder.image);
     }
 
     @Override
@@ -39,8 +43,9 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         return files.length;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
+
         ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);

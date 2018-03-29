@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import royston_dmello.mirrogh.R;
 import royston_dmello.mirrogh.models.StyleModel;
 
-public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder>{
+public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<StyleModel> stylesArraylist;
@@ -22,18 +22,19 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
         this.stylesArraylist = stylesArraylist;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.list_item_style, parent, false));
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+
         public ViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.styleName);
         }
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context)
-                .inflate(R.layout.list_item_style,parent,false));
     }
 
     @Override
