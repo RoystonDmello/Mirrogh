@@ -38,7 +38,7 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText(""+position+"");
+        holder.textView.setText(stylesArraylist.get(position).getId());
     }
 
     @Override

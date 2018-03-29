@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardElevation="4dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    app:cardBackgroundColor="@color/colorAccent">
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    app:cardElevation="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/style_scream" />
 
         <TextView
             android:id="@+id/styleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/app_name"
             android:padding="5dp"
             android:textAlignment="center"
-            android:layout_alignParentBottom="true"/>
+            tools:text="@string/app_name" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </android.support.v7.widget.CardView>

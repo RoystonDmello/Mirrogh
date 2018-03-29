@@ -2,7 +2,6 @@ package royston_dmello.mirrogh.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,8 +32,8 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import royston_dmello.mirrogh.Constants;
 import royston_dmello.mirrogh.R;
-import royston_dmello.mirrogh.models.StyleModel;
 import royston_dmello.mirrogh.adapters.StylesAdapter;
+import royston_dmello.mirrogh.models.StyleModel;
 import util.RestClient;
 
 public class TransformImageActivity extends AppCompatActivity {
@@ -60,13 +59,17 @@ public class TransformImageActivity extends AppCompatActivity {
     }
 
     //TODO: implement this
-    private void showStyles(){
-        ArrayList<StyleModel> styles =  new ArrayList<>();
+    private void showStyles() {
+        ArrayList<StyleModel> styles = new ArrayList<>();
 
-        for(int i=0;i<15;i++) styles.add(new StyleModel());
+        for (int i = 0; i <= 10; i++) {
+            StyleModel styleModel = new StyleModel();
+            styleModel.setId("Style " + i);
+            styles.add(styleModel);
+        }
         recyclerView.setLayoutManager(
-                new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        recyclerView.setAdapter(new StylesAdapter(this,styles));
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(new StylesAdapter(this, styles));
 
     }
 
@@ -98,7 +101,6 @@ public class TransformImageActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     progressDialog.dismiss();
                     Log.d(getLocalClassName(), response.toString());
-
 
 
                     String base64String = null;
@@ -148,7 +150,7 @@ public class TransformImageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
