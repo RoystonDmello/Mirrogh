@@ -2,6 +2,7 @@ package royston_dmello.mirrogh.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,12 +54,16 @@ public class TransformImageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         imageURI = intent.getParcelableExtra(Constants.EXTRA_IMAGE);
-
         Picasso.get().load(imageURI).into(imageView);
 
-        ArrayList<StyleModel> styles =  new ArrayList<>();
-        for(int i=0;i<15;i++) styles.add(new StyleModel());
+        showStyles();
+    }
 
+    //TODO: implement this
+    private void showStyles(){
+        ArrayList<StyleModel> styles =  new ArrayList<>();
+
+        for(int i=0;i<15;i++) styles.add(new StyleModel());
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(new StylesAdapter(this,styles));
