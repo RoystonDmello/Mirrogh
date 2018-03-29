@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         if(swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setEnabled(false);
     }
 
+    //TODO: handle storage permission
     private void showFiles(){
         String filePath = "/"+getString(R.string.app_name);
         File root = Environment.getExternalStorageDirectory();
