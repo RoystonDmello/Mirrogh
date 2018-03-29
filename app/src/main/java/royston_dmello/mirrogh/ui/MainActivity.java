@@ -52,10 +52,9 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshView);
-        swipeRefreshLayout.setOnRefreshListener(this::onResume);
+        swipeRefreshLayout.setOnRefreshListener(this::showFiles);
 
         showFiles();
-        if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setEnabled(false);
     }
 
     private void showFiles() {
@@ -77,17 +76,20 @@ public class MainActivity extends AppCompatActivity {
                 File newFile = new File(root, filePath);
                 newFile.mkdirs();
                 showEmptyView(true);
+                if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
                 return;
             }
             File[] files = directory.listFiles();
             if (files.length == 0) {
                 showEmptyView(true);
+                if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
                 return;
             }
             showEmptyView(false);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             recyclerView.setAdapter(new ImagesAdapter(this, files));
         }
+        if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
     }
 
     private void showEmptyView(boolean show) {
@@ -126,6 +128,5 @@ public class MainActivity extends AppCompatActivity {
                 showEmptyView(true);
             }
         }
-        if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setEnabled(false);
     }
 }
