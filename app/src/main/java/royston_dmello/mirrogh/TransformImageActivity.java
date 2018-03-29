@@ -9,7 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,47 +20,48 @@ import android.widget.Toast;
 import com.loopj.android.http.Base64;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 import util.RestClient;
 
 public class TransformImageActivity extends AppCompatActivity {
 
-    private Uri imageURI;
+    private Uri imageURI = null;
+    private static final String LOG = "TransformActivity";
+    private ImageView imageView;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transform_image);
 
-        Intent showImage = getIntent();
-        Uri URI = showImage.getParcelableExtra(MainActivity.EXTRA_IMAGE);
+        recyclerView = findViewById(R.id.recyclerView);
+        imageView = findViewById(R.id.imageView);
 
-        this.imageURI = URI;
+        Intent intent = getIntent();
+        imageURI = intent.getParcelableExtra(Constants.EXTRA_IMAGE);
 
-        String[] FILE = {MediaStore.Images.Media.DATA};
+        Picasso.get().load(imageURI).into(imageView);
 
-        Cursor cursor = getContentResolver().query(URI,
-                FILE, null, null, null);
+        ArrayList<StyleModel> styles =  new ArrayList<>();
+        for(int i=0;i<15;i++) styles.add(new StyleModel());
 
-        cursor.moveToFirst();
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setAdapter(new StylesAdapter(this,styles));
 
-        int columnIndex = cursor.getColumnIndex(FILE[0]);
-        String ImageDecode = cursor.getString(columnIndex);
-        cursor.close();
-
-        ImageView imageViewLoad = (ImageView) findViewById(R.id.imageView);
-        imageViewLoad.setImageBitmap(BitmapFactory
-                .decodeFile(ImageDecode));
     }
 
-    public void uploadImage(View view) {
+    private void uploadImage(View view) {
         String IMAGE = "image";
 
         RequestParams params = new RequestParams();
@@ -66,7 +70,7 @@ public class TransformImageActivity extends AppCompatActivity {
             File imageFile = new File(getRealPathFromURI(this.imageURI));
             System.out.print(getRealPathFromURI(this.imageURI));
             params.put(IMAGE, imageFile);
-//            params.put(IMAGE, "temp");
+            //params.put(IMAGE, "temp");
 
             final ProgressDialog progressDialog = new ProgressDialog(TransformImageActivity.this);
             progressDialog.setCancelable(false);
@@ -87,6 +91,7 @@ public class TransformImageActivity extends AppCompatActivity {
                     Log.d(getLocalClassName(), response.toString());
 
 
+
                     String base64String = null;
                     try {
                         base64String = response.getString("image_string");
@@ -98,18 +103,17 @@ public class TransformImageActivity extends AppCompatActivity {
                     byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                    ImageView imageViewLoad = (ImageView) findViewById(R.id.imageView);
+                    ImageView imageViewLoad = findViewById(R.id.imageView);
                     imageViewLoad.setImageBitmap(decodedByte);
 
-//                    finish();
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     progressDialog.dismiss();
                     if (errorResponse != null)
-                        Log.e("TransformImageActivity", errorResponse.toString());
-                    else Log.e("TransformImageActivity", throwable.getMessage());
+                        Log.e(LOG, errorResponse.toString());
+                    else Log.e(LOG, throwable.getMessage());
                     Toast.makeText(TransformImageActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -119,7 +123,7 @@ public class TransformImageActivity extends AppCompatActivity {
         }
     }
 
-    public String getRealPathFromURI(Uri uri) {
+    private String getRealPathFromURI(Uri uri) {
         String result;
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         if (cursor == null) { // Source is Dropbox or other similar local file path
@@ -131,6 +135,16 @@ public class TransformImageActivity extends AppCompatActivity {
             cursor.close();
         }
         return result;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
