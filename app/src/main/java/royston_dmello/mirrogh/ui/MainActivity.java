@@ -1,25 +1,32 @@
-package royston_dmello.mirrogh;
+package royston_dmello.mirrogh.ui;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import royston_dmello.mirrogh.Constants;
+import royston_dmello.mirrogh.R;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int IMG_RESULT = 1;
     private static final String LOG = "MainActivity";
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.main_recycler_view);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((view -> {

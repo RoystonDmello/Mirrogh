@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh;
+package royston_dmello.mirrogh.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -30,6 +30,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import royston_dmello.mirrogh.Constants;
+import royston_dmello.mirrogh.R;
+import royston_dmello.mirrogh.models.StyleModel;
+import royston_dmello.mirrogh.adapters.StylesAdapter;
 import util.RestClient;
 
 public class TransformImageActivity extends AppCompatActivity {

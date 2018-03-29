@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh;
+package royston_dmello.mirrogh.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import royston_dmello.mirrogh.R;
+import royston_dmello.mirrogh.models.StyleModel;
 
 public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder>{
 

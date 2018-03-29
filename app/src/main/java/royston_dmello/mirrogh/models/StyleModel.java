@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh;
+package royston_dmello.mirrogh.models;
 
 public class StyleModel {
 
