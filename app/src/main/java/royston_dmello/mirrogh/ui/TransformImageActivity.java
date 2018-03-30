@@ -110,7 +110,7 @@ public class TransformImageActivity extends AppCompatActivity {
 
     }
 
-    private void uploadImage(View view) {
+    private void uploadImage() {
         String IMAGE = "image";
 
         RequestParams params = new RequestParams();
@@ -119,12 +119,11 @@ public class TransformImageActivity extends AppCompatActivity {
             File imageFile = new File(getRealPathFromURI(this.imageURI));
             System.out.print(getRealPathFromURI(this.imageURI));
             params.put(IMAGE, imageFile);
-            //params.put(IMAGE, "temp");
 
             final ProgressDialog progressDialog = new ProgressDialog(TransformImageActivity.this);
             progressDialog.setCancelable(false);
 
-            RestClient.setTimeOut(480000);
+            RestClient.setTimeOut(300000);
 
             RestClient.post("transform/", null, params, new JsonHttpResponseHandler() {
                 @Override
@@ -137,28 +136,27 @@ public class TransformImageActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     progressDialog.dismiss();
+                    RestClient.setTimeOut(10000);
                     Log.d(getLocalClassName(), response.toString());
 
-
-                    String base64String = null;
                     try {
-                        base64String = response.getString("image_string");
+                        String base64String = response.getString("image_string");
+
+                        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                        ImageView imageViewLoad = findViewById(R.id.imageView);
+                        imageViewLoad.setImageBitmap(decodedByte);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String base64Image = base64String;
-
-                    byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                    ImageView imageViewLoad = findViewById(R.id.imageView);
-                    imageViewLoad.setImageBitmap(decodedByte);
-
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     progressDialog.dismiss();
+                    RestClient.setTimeOut(10000);
                     if (errorResponse != null)
                         Log.e(LOG, errorResponse.toString());
                     else Log.e(LOG, throwable.getMessage());
