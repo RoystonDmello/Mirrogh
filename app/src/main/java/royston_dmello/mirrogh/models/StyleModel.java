@@ -1,26 +1,15 @@
 package royston_dmello.mirrogh.models;
 
-import java.io.File;
-
 public class StyleModel {
 
-    private File file;
-    private String id;
+    private String id, thumbnail_url;
 
     public StyleModel() {
     }
 
-    public StyleModel(File file, String id) {
-        this.file = file;
+    public StyleModel(String id, String thumbnail_url) {
         this.id = id;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
+        this.thumbnail_url = thumbnail_url;
     }
 
     public String getId() {
@@ -30,4 +19,13 @@ public class StyleModel {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getThumbnail_url() {
+        return thumbnail_url;
+    }
+
+    public void setThumbnail_url(String thumbnail_url) {
+        this.thumbnail_url = thumbnail_url;
+    }
+
 }

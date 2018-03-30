@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.loopj.android.http.Base64;
@@ -22,6 +23,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +44,7 @@ public class TransformImageActivity extends AppCompatActivity {
     private static final String LOG = "TransformActivity";
     private ImageView imageView;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class TransformImageActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         imageView = findViewById(R.id.imageView);
+        progressBar = findViewById(R.id.styles_loading_progress_bar);
 
         Intent intent = getIntent();
         imageURI = intent.getParcelableExtra(Constants.EXTRA_IMAGE);
@@ -62,14 +66,47 @@ public class TransformImageActivity extends AppCompatActivity {
     private void showStyles() {
         ArrayList<StyleModel> styles = new ArrayList<>();
 
-        for (int i = 0; i <= 10; i++) {
-            StyleModel styleModel = new StyleModel();
-            styleModel.setId("Style " + i);
-            styles.add(styleModel);
-        }
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new StylesAdapter(this, styles));
+        RestClient.get("styles/get/", null, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject styleObject = response.getJSONObject(i);
+                        String name = styleObject.getString("name");
+                        String thumbnail = styleObject.getString("thumbnail");
+                        styles.add(new StyleModel(name, thumbnail));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                recyclerView.setLayoutManager(
+                        new LinearLayoutManager(TransformImageActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                recyclerView.setAdapter(new StylesAdapter(TransformImageActivity.this, styles));
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Toast.makeText(TransformImageActivity.this, R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
+                if (errorResponse != null)
+                    Log.d(getLocalClassName(), errorResponse.toString());
+                else Log.d(getLocalClassName(), "Null response" +
+                        "");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(TransformImageActivity.this, R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
+                Log.d(getLocalClassName(), responseString);
+            }
+        });
 
     }
 

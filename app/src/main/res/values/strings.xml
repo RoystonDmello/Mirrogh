@@ -7,4 +7,5 @@
     <string name="main_prompt">Begin by pressing the button below to pick an image</string>
     <string name="storage_permission_rationale">Storage permission required to show images</string>
     <string name="grant">Grant</string>
+    <string name="error_fetching_styles">Error fetching styles</string>
 </resources>
