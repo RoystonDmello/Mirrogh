@@ -12,6 +12,7 @@
     app:cardElevation="4dp">
 
     <ImageView
+        android:id="@+id/style_thumbnail"
         android:layout_width="@dimen/style_item_dimen"
         android:layout_height="@dimen/style_item_dimen"
         android:adjustViewBounds="true"
