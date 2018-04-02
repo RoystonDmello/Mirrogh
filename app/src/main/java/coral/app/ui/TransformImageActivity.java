@@ -219,7 +219,7 @@ public class TransformImageActivity extends AppCompatActivity {
         if (decodedBytes == null) {
             Toast.makeText(this, R.string.no_changes, Toast.LENGTH_SHORT).show();
         } else {
-            new SavePhotoTask().execute();
+            new SavePhotoTask(decodedBytes).execute();
         }
     }
 
@@ -236,7 +236,13 @@ public class TransformImageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class SavePhotoTask extends AsyncTask<byte[], String, Void> {
+    class SavePhotoTask extends AsyncTask<Void, String, Void> {
+
+        private byte[] imageBytes;
+
+        SavePhotoTask(byte[] imageBytes) {
+            this.imageBytes = imageBytes;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -244,8 +250,9 @@ public class TransformImageActivity extends AppCompatActivity {
             progressDialog.setMessage(getString(R.string.saving_image));
         }
 
+
         @Override
-        protected Void doInBackground(byte[]... jpeg) {
+        protected Void doInBackground(Void... voids) {
             @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy-hhmmss");
             String filePath = "/" + getString(R.string.app_name)
@@ -259,8 +266,7 @@ public class TransformImageActivity extends AppCompatActivity {
 
             try {
                 FileOutputStream fos = new FileOutputStream(photo.getPath());
-
-                fos.write(jpeg[0]);
+                fos.write(imageBytes);
                 fos.close();
             } catch (java.io.IOException e) {
                 Log.e("SavePhotoTask", "IOException when saving image", e);
