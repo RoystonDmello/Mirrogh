@@ -8,4 +8,8 @@
     <string name="storage_permission_rationale">Storage permission required to show images</string>
     <string name="grant">Grant</string>
     <string name="error_fetching_styles">Error fetching styles</string>
+    <string name="discard">Discard</string>
+    <string name="save">Save</string>
+    <string name="no_changes">No changes to save</string>
+    <string name="saving_image">Saving image…</string>
 </resources>

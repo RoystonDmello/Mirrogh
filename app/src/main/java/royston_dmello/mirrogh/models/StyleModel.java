@@ -1,5 +1,7 @@
 package royston_dmello.mirrogh.models;
 
+import static util.RestClient.BASE_URL;
+
 public class StyleModel {
 
     private String id, thumbnail_url;
@@ -21,7 +23,7 @@ public class StyleModel {
     }
 
     public String getThumbnail_url() {
-        return thumbnail_url;
+        return BASE_URL + thumbnail_url;
     }
 
     public void setThumbnail_url(String thumbnail_url) {
