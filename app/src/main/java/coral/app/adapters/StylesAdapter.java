@@ -42,7 +42,7 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
         Picasso.get().load(stylesArrayList.get(position).getThumbnailUrl())
                 .error(R.drawable.ic_image)
                 .into(holder.thumbnailView);
-        holder.rootView.setOnClickListener(v -> listener.onStyleSelected(styleName));
+        holder.rootView.setOnClickListener(v -> listener.onStyleSelected(stylesArrayList.get(position).getId()));
     }
 
 
