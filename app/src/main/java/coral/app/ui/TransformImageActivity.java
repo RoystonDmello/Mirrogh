@@ -277,6 +277,8 @@ public class TransformImageActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
+            Toast.makeText(TransformImageActivity.this, "Saved", Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 

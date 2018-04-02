@@ -3,6 +3,7 @@ package coral.app.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.swipeRefreshView);
         swipeRefreshLayout.setOnRefreshListener(this::showFiles);
 
-        showFiles();
 
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             CropImage.activity(null)
@@ -62,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
                     .start(this);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showFiles();
     }
 
     private void showFiles() {
@@ -114,7 +120,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             showEmptyView(false);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            int orientation = getResources().getConfiguration().orientation;
+            int spanCount;
+            if (orientation == Configuration.ORIENTATION_PORTRAIT)
+                spanCount = 2;
+            else
+                spanCount = 3;
+
+            recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
             recyclerView.setAdapter(new ImagesAdapter(this, files));
         }
 
