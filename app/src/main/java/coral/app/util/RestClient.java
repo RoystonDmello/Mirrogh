@@ -1,4 +1,4 @@
-package util;
+package coral.app.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -9,10 +9,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import cz.msebera.android.httpclient.Header;
-
-/**
- * Created by royston on 27/1/18.
- */
 
 public class RestClient {
     public static String BASE_URL = "http://192.168.1.15:8000";
@@ -68,7 +64,6 @@ public class RestClient {
         NetworkInfo networkInfo = manager != null ? manager.getActiveNetworkInfo() : null;
         return (networkInfo != null && networkInfo.isConnected());
     }
-
 
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + "/api/" + relativeUrl;

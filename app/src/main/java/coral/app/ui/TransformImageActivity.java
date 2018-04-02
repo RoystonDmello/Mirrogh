@@ -43,8 +43,8 @@ import coral.app.Constants;
 import coral.app.R;
 import coral.app.adapters.StylesAdapter;
 import coral.app.models.StyleModel;
+import coral.app.util.RestClient;
 import cz.msebera.android.httpclient.Header;
-import util.RestClient;
 
 public class TransformImageActivity extends AppCompatActivity {
     private static final String LOG = "TransformActivity";

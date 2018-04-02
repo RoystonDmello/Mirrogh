@@ -17,15 +17,15 @@ import coral.app.R;
 import coral.app.models.StyleModel;
 
 public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder> {
-    private static final String LOG = "StylesAdapter";
+
     private Context context;
-    private ArrayList<StyleModel> stylesArraylist;
+    private ArrayList<StyleModel> stylesArrayList;
     private StylesAdapter.OnStyleSelectedListener listener;
 
-    public StylesAdapter(Context context, ArrayList<StyleModel> stylesArraylist,
+    public StylesAdapter(Context context, ArrayList<StyleModel> stylesArrayList,
                          OnStyleSelectedListener listener) {
         this.context = context;
-        this.stylesArraylist = stylesArraylist;
+        this.stylesArrayList = stylesArrayList;
         this.listener = listener;
     }
 
@@ -37,9 +37,9 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String styleName = stylesArraylist.get(position).getId();
+        String styleName = stylesArrayList.get(position).getId();
         holder.textView.setText(styleName);
-        Picasso.get().load(stylesArraylist.get(position).getThumbnail_url())
+        Picasso.get().load(stylesArrayList.get(position).getThumbnailUrl())
                 .error(R.drawable.ic_image)
                 .into(holder.thumbnailView);
         holder.rootView.setOnClickListener(v -> listener.onStyleSelected(styleName));
@@ -48,7 +48,7 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return stylesArraylist.size();
+        return stylesArrayList.size();
     }
 
     public interface OnStyleSelectedListener {

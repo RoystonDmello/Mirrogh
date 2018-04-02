@@ -30,11 +30,11 @@ import coral.app.adapters.ImagesAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int IMG_RESULT = 1;
     private static final String LOG = "MainActivity";
     private static final int RC_READ_STORAGE = 101;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +66,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFiles() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_DENIED) {
+
             if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE);
+                requestPermissions(
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        RC_READ_STORAGE
+                );
             } else {
-                Snackbar snackbar = Snackbar.make(swipeRefreshLayout,
-                        R.string.storage_permission_rationale, Snackbar.LENGTH_LONG);
-                snackbar.setAction(R.string.grant, v -> requestPermissions(
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE));
+                Snackbar snackbar = Snackbar.make(
+                        swipeRefreshLayout,
+                        R.string.storage_permission_rationale,
+                        Snackbar.LENGTH_LONG
+                );
+
+                snackbar.setAction(R.string.grant,
+                        v -> requestPermissions(
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                RC_READ_STORAGE
+                        )
+                );
                 snackbar.show();
                 showEmptyView(true);
             }
@@ -82,25 +95,33 @@ public class MainActivity extends AppCompatActivity {
             File root = Environment.getExternalStorageDirectory();
             String path = root.toString() + filePath;
             File directory = new File(path);
+
             if (!directory.exists()) {
                 File newFile = new File(root, filePath);
                 newFile.mkdirs();
                 showEmptyView(true);
-                if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefreshLayout.isRefreshing())
+                    swipeRefreshLayout.setRefreshing(false);
                 return;
             }
+
             File[] files = directory.listFiles();
             if (files.length == 0) {
                 showEmptyView(true);
-                if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefreshLayout.isRefreshing())
+                    swipeRefreshLayout.setRefreshing(false);
                 return;
             }
+
             showEmptyView(false);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             recyclerView.setAdapter(new ImagesAdapter(this, files));
         }
-        if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
+
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
     }
+
 
     private void showEmptyView(boolean show) {
         TextView emptyView = findViewById(R.id.emptyView);
@@ -109,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         else
             emptyView.setVisibility(View.GONE);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -128,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -136,7 +159,9 @@ public class MainActivity extends AppCompatActivity {
                 showFiles();
             } else {
                 Snackbar.make(swipeRefreshLayout,
-                        R.string.storage_permission_rationale, Snackbar.LENGTH_LONG).show();
+                        R.string.storage_permission_rationale,
+                        Snackbar.LENGTH_LONG
+                ).show();
                 showEmptyView(true);
             }
         }

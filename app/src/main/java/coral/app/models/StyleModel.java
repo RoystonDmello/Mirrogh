@@ -1,17 +1,14 @@
 package coral.app.models;
 
-import static util.RestClient.BASE_URL;
+import static coral.app.util.RestClient.BASE_URL;
 
 public class StyleModel {
 
-    private String id, thumbnail_url;
+    private String id, thumbnailUrl;
 
-    public StyleModel() {
-    }
-
-    public StyleModel(String id, String thumbnail_url) {
+    public StyleModel(String id, String thumbnailUrl) {
         this.id = id;
-        this.thumbnail_url = thumbnail_url;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getId() {
@@ -22,12 +19,12 @@ public class StyleModel {
         this.id = id;
     }
 
-    public String getThumbnail_url() {
-        return BASE_URL + thumbnail_url;
+    public String getThumbnailUrl() {
+        return BASE_URL + thumbnailUrl;
     }
 
-    public void setThumbnail_url(String thumbnail_url) {
-        this.thumbnail_url = thumbnail_url;
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
 }
