@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="royston_dmello.mirrogh.ui.TransformImageActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="3" />
+        android:layout_marginBottom="@dimen/style_recyclerview_dimen" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_portrait"
-            android:tooltipText="@string/portrait_mode" />
+        android:layout_height="@dimen/style_recyclerview_dimen"
+        android:layout_gravity="bottom">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/style_recyclerview_dimen"
-            android:layout_below="@id/fab"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:padding="4dp" />
@@ -44,4 +36,16 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_portrait"
+        android:tooltipText="@string/portrait_mode"
+        app:layout_anchor="@id/imageView"
+        app:layout_anchorGravity="bottom|center_horizontal" />
+
+</android.support.design.widget.CoordinatorLayout>
