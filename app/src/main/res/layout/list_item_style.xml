@@ -25,6 +25,7 @@
         android:layout_gravity="bottom"
         android:background="#99000000"
         android:padding="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:textAlignment="center"
         tools:text="Style" />
 
