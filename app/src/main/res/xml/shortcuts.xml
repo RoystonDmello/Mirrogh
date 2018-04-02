@@ -1,0 +1,15 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_create"
+        android:shortcutId="create"
+        android:shortcutLongLabel="@string/create"
+        android:shortcutShortLabel="@string/create">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="royston_dmello.mirrogh.ui.MainActivity"
+            android:targetPackage="royston_dmello.mirrogh" />
+        <categories android:name="android.shortcut.create" />
+    </shortcut>
+    <!-- Specify more shortcuts here. -->
+</shortcuts>

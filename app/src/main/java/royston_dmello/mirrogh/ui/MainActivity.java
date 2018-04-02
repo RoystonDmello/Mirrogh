@@ -55,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(this::showFiles);
 
         showFiles();
+
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+            CropImage.activity(null)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setCropShape(CropImageView.CropShape.RECTANGLE)
+                    .start(this);
+        }
     }
 
     private void showFiles() {
