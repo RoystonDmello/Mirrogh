@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="royston_dmello.mirrogh">
+    package="coral.app">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name="coral.app.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,8 +31,8 @@
         </activity>
 
         <activity
-            android:name=".ui.TransformImageActivity"
-            android:parentActivityName=".ui.MainActivity" />
+            android:name="coral.app.ui.TransformImageActivity"
+            android:parentActivityName="coral.app.ui.MainActivity" />
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

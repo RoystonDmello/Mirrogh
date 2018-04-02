@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh.adapters;
+package coral.app.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import royston_dmello.mirrogh.R;
-import royston_dmello.mirrogh.models.StyleModel;
+import coral.app.R;
+import coral.app.models.StyleModel;
 
 public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder> {
     private static final String LOG = "StylesAdapter";

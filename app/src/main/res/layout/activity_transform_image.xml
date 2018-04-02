@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="royston_dmello.mirrogh.ui.TransformImageActivity">
+    tools:context="coral.app.ui.TransformImageActivity">
 
     <ImageView
         android:id="@+id/imageView"

@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh.ui;
+package coral.app.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -39,11 +39,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import coral.app.Constants;
+import coral.app.R;
+import coral.app.adapters.StylesAdapter;
+import coral.app.models.StyleModel;
 import cz.msebera.android.httpclient.Header;
-import royston_dmello.mirrogh.Constants;
-import royston_dmello.mirrogh.R;
-import royston_dmello.mirrogh.adapters.StylesAdapter;
-import royston_dmello.mirrogh.models.StyleModel;
 import util.RestClient;
 
 public class TransformImageActivity extends AppCompatActivity {

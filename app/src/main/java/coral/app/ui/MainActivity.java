@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh.ui;
+package coral.app.ui;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,9 +23,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 
-import royston_dmello.mirrogh.Constants;
-import royston_dmello.mirrogh.R;
-import royston_dmello.mirrogh.adapters.ImagesAdapter;
+import coral.app.Constants;
+import coral.app.R;
+import coral.app.adapters.ImagesAdapter;
 
 
 public class MainActivity extends AppCompatActivity {

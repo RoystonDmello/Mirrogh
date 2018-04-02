@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh.adapters;
+package coral.app.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import royston_dmello.mirrogh.R;
+import coral.app.R;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
 

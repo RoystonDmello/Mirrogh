@@ -1,4 +1,4 @@
-package royston_dmello.mirrogh.models;
+package coral.app.models;
 
 import static util.RestClient.BASE_URL;
 
