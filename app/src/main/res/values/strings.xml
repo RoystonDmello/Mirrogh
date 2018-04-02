@@ -16,4 +16,9 @@
     <string name="network_error_message">Please connect to the internet</string>
     <string name="network_restored">Connection restored</string>
     <string name="fetching_styles">Fetching styles</string>
+
+    <string name="title_activity_image_viewer">ImageViewerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="share_text">Created using %1$s</string>
 </resources>
