@@ -74,8 +74,12 @@ public class TransformImageActivity extends AppCompatActivity {
         portraitFab.setOnClickListener((view) -> {
             uploadImage(Constants.PORTRAIT);
         });
-
-        showStyles();
+        if (RestClient.isNetworkConnected(this)) {
+            showStyles();
+        } else {
+            portraitFab.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, R.string.network_error_message, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void showStyles() {

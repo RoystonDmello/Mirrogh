@@ -13,4 +13,5 @@
     <string name="saving_image">Saving image…</string>
     <string name="portrait_mode">Portrait Mode</string>
     <string name="failed_to_process">Failed to process image, try again later</string>
+    <string name="network_error_message">Please connect to the internet</string>
 </resources>
