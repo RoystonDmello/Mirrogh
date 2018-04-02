@@ -65,12 +65,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFiles() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE);
             } else {
-                Snackbar snackbar = Snackbar.make(swipeRefreshLayout, R.string.storage_permission_rationale, Snackbar.LENGTH_LONG);
-                snackbar.setAction(R.string.grant, v -> requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE));
+                Snackbar snackbar = Snackbar.make(swipeRefreshLayout,
+                        R.string.storage_permission_rationale, Snackbar.LENGTH_LONG);
+                snackbar.setAction(R.string.grant, v -> requestPermissions(
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_READ_STORAGE));
                 snackbar.show();
                 showEmptyView(true);
             }
@@ -126,12 +129,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode == RC_READ_STORAGE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 showFiles();
             } else {
-                Snackbar.make(swipeRefreshLayout, R.string.storage_permission_rationale, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(swipeRefreshLayout,
+                        R.string.storage_permission_rationale, Snackbar.LENGTH_LONG).show();
                 showEmptyView(true);
             }
         }

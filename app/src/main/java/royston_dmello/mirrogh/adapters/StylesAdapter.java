@@ -1,7 +1,6 @@
 package royston_dmello.mirrogh.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,18 +18,14 @@ import royston_dmello.mirrogh.models.StyleModel;
 
 public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder> {
     private static final String LOG = "StylesAdapter";
-    private Uri imageURI = null;
     private Context context;
     private ArrayList<StyleModel> stylesArraylist;
-    private ImageView imageView;
     private StylesAdapter.OnStyleSelectedListener listener;
 
     public StylesAdapter(Context context, ArrayList<StyleModel> stylesArraylist,
-                         Uri imageURI, OnStyleSelectedListener listener) {
+                         OnStyleSelectedListener listener) {
         this.context = context;
         this.stylesArraylist = stylesArraylist;
-        this.imageURI = imageURI;
-        this.imageView = imageView;
         this.listener = listener;
     }
 
@@ -56,6 +51,10 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
         return stylesArraylist.size();
     }
 
+    public interface OnStyleSelectedListener {
+        void onStyleSelected(String style);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         View rootView;
@@ -67,11 +66,6 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
             textView = itemView.findViewById(R.id.styleName);
             thumbnailView = itemView.findViewById(R.id.style_thumbnail);
         }
-    }
-
-
-    public interface OnStyleSelectedListener {
-        void onStyleSelected(String style);
     }
 
 }

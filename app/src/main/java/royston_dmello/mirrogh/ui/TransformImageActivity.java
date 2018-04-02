@@ -1,5 +1,6 @@
 package royston_dmello.mirrogh.ui;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -71,7 +72,7 @@ public class TransformImageActivity extends AppCompatActivity {
         Picasso.get().load(imageURI).into(imageView);
 
         portraitFab.setOnClickListener((view) -> {
-            uploadImage("portrait");
+            uploadImage(Constants.PORTRAIT);
         });
 
         showStyles();
@@ -92,17 +93,17 @@ public class TransformImageActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject styleObject = response.getJSONObject(i);
-                        String name = styleObject.getString("name");
-                        String thumbnail = styleObject.getString("thumbnail");
+                        String name = styleObject.getString(Constants.NAME);
+                        String thumbnail = styleObject.getString(Constants.THUMBNAIL);
                         styles.add(new StyleModel(name, thumbnail));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                recyclerView.setLayoutManager(
-                        new LinearLayoutManager(TransformImageActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                recyclerView.setAdapter(new StylesAdapter(TransformImageActivity.this, styles, imageURI,
+                recyclerView.setLayoutManager(new LinearLayoutManager(TransformImageActivity.this,
+                        LinearLayoutManager.HORIZONTAL, false));
+                recyclerView.setAdapter(new StylesAdapter(TransformImageActivity.this, styles,
                         style -> {
                             uploadImage(style);
                         }
@@ -111,8 +112,10 @@ public class TransformImageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(TransformImageActivity.this, R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
+            public void onFailure(int statusCode, Header[] headers,
+                                  Throwable throwable, JSONObject errorResponse) {
+                Toast.makeText(TransformImageActivity.this,
+                        R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
                 if (errorResponse != null)
                     Log.d(getLocalClassName(), errorResponse.toString());
                 else Log.d(getLocalClassName(), "Null response" +
@@ -120,70 +123,71 @@ public class TransformImageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(TransformImageActivity.this, R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseString, Throwable throwable) {
+                Toast.makeText(TransformImageActivity.this,
+                        R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
                 Log.d(getLocalClassName(), responseString);
             }
         });
     }
 
     private void uploadImage(String styleName) {
-        String IMAGE = "image";
-        String STYLE = "style";
-
         RequestParams params = new RequestParams();
 
         try {
             File imageFile = new File(getRealPathFromURI(this.imageURI));
             System.out.print(getRealPathFromURI(this.imageURI));
-            params.put(IMAGE, imageFile);
-            params.put(STYLE, styleName);
+            params.put(Constants.IMAGE, imageFile);
+            params.put(Constants.STYLE, styleName);
 
             progressDialog.setCancelable(false);
 
             RestClient.setTimeOut(300000);
 
-            RestClient.post("transform/", null, params, new JsonHttpResponseHandler() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                    progressDialog.setMessage(getString(R.string.transforming));
-                    progressDialog.show();
-                }
+            RestClient.post("transform/", null, params,
+                    new JsonHttpResponseHandler() {
+                        @Override
+                        public void onStart() {
+                            super.onStart();
+                            progressDialog.setMessage(getString(R.string.transforming));
+                            progressDialog.show();
+                        }
 
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    progressDialog.dismiss();
-                    RestClient.setTimeOut(10000);
-                    Log.d(LOG, response.toString());
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            progressDialog.dismiss();
+                            RestClient.setTimeOut(10000);
+                            Log.d(LOG, response.toString());
 
-                    try {
-                        String base64String = response.getString("image_string");
+                            try {
+                                String base64String = response.getString(Constants.IMAGE_STRING);
 
-                        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0,
-                                decodedString.length);
+                                byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0,
+                                        decodedString.length);
 
-                        imageView.setImageBitmap(decodedByte);
-                        recyclerView.setVisibility(View.INVISIBLE);
-                        decodedBytes = decodedString;
+                                imageView.setImageBitmap(decodedByte);
+                                recyclerView.setVisibility(View.INVISIBLE);
+                                decodedBytes = decodedString;
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable,
-                                      JSONObject errorResponse) {
-                    progressDialog.dismiss();
-                    RestClient.setTimeOut(10000);
-                    if (errorResponse != null)
-                        Log.e(LOG, errorResponse.toString());
-                    else Log.e(LOG, throwable.getMessage());
-                    Toast.makeText(TransformImageActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable,
+                                              JSONObject errorResponse) {
+                            progressDialog.dismiss();
+                            RestClient.setTimeOut(10000);
+                            if (errorResponse != null)
+                                Log.e(LOG, errorResponse.toString());
+                            else Log.e(LOG, throwable.getMessage());
+                            Toast.makeText(TransformImageActivity.this,
+                                    R.string.error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -242,6 +246,7 @@ public class TransformImageActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(byte[]... jpeg) {
+            @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy-hhmmss");
             String filePath = "/" + getString(R.string.app_name)
                     + "/" + dateFormat.format(new Date()) + ".jpeg";
