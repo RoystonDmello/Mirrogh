@@ -37,7 +37,7 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String styleName = stylesArrayList.get(position).getId();
+        String styleName = stylesArrayList.get(position).getId().replace(".ckpt", "");
         holder.textView.setText(styleName);
         Picasso.get().load(stylesArrayList.get(position).getThumbnailUrl())
                 .error(R.drawable.ic_image)
