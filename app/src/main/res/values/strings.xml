@@ -12,4 +12,5 @@
     <string name="no_changes">No changes to save</string>
     <string name="saving_image">Saving image…</string>
     <string name="portrait_mode">Portrait Mode</string>
+    <string name="failed_to_process">Failed to process image, try again later</string>
 </resources>

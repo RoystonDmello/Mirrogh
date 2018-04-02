@@ -168,7 +168,6 @@ public class TransformImageActivity extends AppCompatActivity {
                                         decodedString.length);
 
                                 imageView.setImageBitmap(decodedByte);
-                                recyclerView.setVisibility(View.INVISIBLE);
                                 decodedBytes = decodedString;
 
                             } catch (JSONException e) {
@@ -186,6 +185,17 @@ public class TransformImageActivity extends AppCompatActivity {
                             else Log.e(LOG, throwable.getMessage());
                             Toast.makeText(TransformImageActivity.this,
                                     R.string.error, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            progressDialog.dismiss();
+                            RestClient.setTimeOut(10000);
+                            if (responseString != null)
+                                Log.e(LOG, responseString);
+                            else Log.e(LOG, throwable.getMessage());
+                            Toast.makeText(TransformImageActivity.this,
+                                    R.string.failed_to_process, Toast.LENGTH_LONG).show();
                         }
                     });
 
