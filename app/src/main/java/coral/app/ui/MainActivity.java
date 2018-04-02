@@ -32,7 +32,7 @@ import coral.app.adapters.ImagesAdapter;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG = "MainActivity";
-    private static final int RC_READ_STORAGE = 101;
+    private static final int RC_WRITE_STORAGE = 101;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -72,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFiles() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                         PackageManager.PERMISSION_DENIED) {
 
-            if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 requestPermissions(
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        RC_READ_STORAGE
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        RC_WRITE_STORAGE
                 );
             } else {
                 Snackbar snackbar = Snackbar.make(
@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
                 snackbar.setAction(R.string.grant,
                         v -> requestPermissions(
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                RC_READ_STORAGE
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                RC_WRITE_STORAGE
                         )
                 );
                 snackbar.show();
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == RC_READ_STORAGE) {
+        if (requestCode == RC_WRITE_STORAGE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 showFiles();
             } else {
