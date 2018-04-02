@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">Coral</string>
     <string name="pick_picture">Pick</string>
-    <string name="transform_image">Transform</string>
+    <string name="create">Create</string>
     <string name="transforming">Transforming</string>
     <string name="error">Image not uploaded</string>
     <string name="main_prompt">Begin by pressing the button below to pick an image</string>
     <string name="storage_permission_rationale">Storage permission required to show images</string>
     <string name="grant">Grant</string>
     <string name="error_fetching_styles">Error fetching styles</string>
-    <string name="discard">Discard</string>
     <string name="save">Save</string>
     <string name="no_changes">No changes to save</string>
     <string name="saving_image">Saving image…</string>
+    <string name="portrait_mode">Portrait Mode</string>
 </resources>

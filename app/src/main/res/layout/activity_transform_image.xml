@@ -22,12 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_portrait"
+            android:tooltipText="@string/portrait_mode" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_height="@dimen/style_recyclerview_dimen"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/style_recyclerview_dimen"
             android:layout_below="@id/fab"
             android:clipToPadding="false"
             android:orientation="horizontal"
