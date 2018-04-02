@@ -14,4 +14,6 @@
     <string name="portrait_mode">Portrait Mode</string>
     <string name="failed_to_process">Failed to process image, try again later</string>
     <string name="network_error_message">Please connect to the internet</string>
+    <string name="network_restored">Connection restored</string>
+    <string name="fetching_styles">Fetching styles</string>
 </resources>

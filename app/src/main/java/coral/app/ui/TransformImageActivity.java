@@ -2,16 +2,21 @@ package coral.app.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,6 +60,7 @@ public class TransformImageActivity extends AppCompatActivity {
     private FloatingActionButton portraitFab;
     private byte[] decodedBytes;
     private ProgressDialog progressDialog;
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +80,50 @@ public class TransformImageActivity extends AppCompatActivity {
         portraitFab.setOnClickListener((view) -> {
             uploadImage(Constants.PORTRAIT);
         });
+
         if (RestClient.isNetworkConnected(this)) {
             showStyles();
+            portraitFab.setVisibility(View.VISIBLE);
+            Snackbar.make(recyclerView, R.string.fetching_styles, Snackbar.LENGTH_SHORT).show();
         } else {
             portraitFab.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, R.string.network_error_message, Toast.LENGTH_LONG).show();
+            Snackbar.make(recyclerView, R.string.network_error_message, Snackbar.LENGTH_INDEFINITE).show();
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        IntentFilter i = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!isInitialStickyBroadcast()) {
+                    // Connectivity state has changed
+                    if (RestClient.isNetworkConnected(TransformImageActivity.this)) {
+                        Snackbar.make(recyclerView,
+                                R.string.network_restored, Snackbar.LENGTH_SHORT).show();
+                        showStyles();
+                        recyclerView.setVisibility(View.VISIBLE);
+                        portraitFab.setVisibility(View.VISIBLE);
+                    } else {
+                        Snackbar.make(recyclerView,
+                                R.string.network_error_message, Snackbar.LENGTH_INDEFINITE).show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        portraitFab.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        };
+        registerReceiver(receiver, i);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(receiver);
+        super.onPause();
     }
 
     private void showStyles() {
@@ -118,6 +162,7 @@ public class TransformImageActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   Throwable throwable, JSONObject errorResponse) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(TransformImageActivity.this,
                         R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
                 if (errorResponse != null)
@@ -129,6 +174,7 @@ public class TransformImageActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(TransformImageActivity.this,
                         R.string.error_fetching_styles, Toast.LENGTH_LONG).show();
                 Log.d(getLocalClassName(), responseString);
