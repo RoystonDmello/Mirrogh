@@ -7,8 +7,8 @@
         android:shortcutShortLabel="@string/create">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="royston_dmello.mirrogh.ui.MainActivity"
-            android:targetPackage="royston_dmello.mirrogh" />
+            android:targetClass="coral.app.ui.MainActivity"
+            android:targetPackage="coral.app" />
         <categories android:name="android.shortcut.create" />
     </shortcut>
     <!-- Specify more shortcuts here. -->
