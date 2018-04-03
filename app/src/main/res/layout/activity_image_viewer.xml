@@ -17,7 +17,7 @@
         android:id="@+id/fullscreen_content_controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#99666666">
+        android:background="#ff424242">
 
         <ImageButton
             android:id="@+id/close_button"
