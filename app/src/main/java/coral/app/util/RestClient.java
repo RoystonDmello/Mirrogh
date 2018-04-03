@@ -11,8 +11,8 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 
 public class RestClient {
-    //public static String BASE_URL = "http://192.168.1.15:8000";
-    public static String BASE_URL = "http://09e42fad.ngrok.io";
+    public static String BASE_URL = "http://192.168.43.181:8000";
+    // public static String BASE_URL = "http://bc90a927.ngrok.io";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -24,7 +24,8 @@ public class RestClient {
         client.setTimeout(value);
     }
 
-    public static void get(String url, Header[] headers, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public static void get(String url, Header[] headers, RequestParams params,
+                           AsyncHttpResponseHandler responseHandler) {
         try {
             if (headers != null) {
                 client.removeAllHeaders();
@@ -38,7 +39,8 @@ public class RestClient {
         }
     }
 
-    public static void post(String url, Header[] headers, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public static void post(String url, Header[] headers, RequestParams params,
+                            AsyncHttpResponseHandler responseHandler) {
         try {
             if (headers != null) {
                 client.removeAllHeaders();
@@ -52,7 +54,8 @@ public class RestClient {
         }
     }
 
-    public static void delete(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public static void delete(String url, RequestParams params,
+                              AsyncHttpResponseHandler responseHandler) {
         try {
             client.delete(getAbsoluteUrl(url), params, responseHandler);
         } catch (Exception e) {
@@ -61,7 +64,8 @@ public class RestClient {
     }
 
     public static boolean isNetworkConnected(Context context) {
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager != null ? manager.getActiveNetworkInfo() : null;
         return (networkInfo != null && networkInfo.isConnected());
     }

@@ -87,7 +87,8 @@ public class TransformImageActivity extends AppCompatActivity {
             Snackbar.make(recyclerView, R.string.fetching_styles, Snackbar.LENGTH_SHORT).show();
         } else {
             portraitFab.setVisibility(View.INVISIBLE);
-            Snackbar.make(recyclerView, R.string.network_error_message, Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(recyclerView,
+                    R.string.network_error_message, Snackbar.LENGTH_INDEFINITE).show();
         }
 
     }
