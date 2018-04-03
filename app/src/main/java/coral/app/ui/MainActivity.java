@@ -62,11 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
                     .start(this);
         }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         showFiles();
     }
 
