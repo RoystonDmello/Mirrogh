@@ -281,6 +281,7 @@ public class TransformImageActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_changes, Toast.LENGTH_SHORT).show();
         } else {
             new SavePhotoTask(decodedBytes).execute();
+            decodedBytes = null;
         }
     }
 
